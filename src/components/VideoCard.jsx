@@ -8,7 +8,7 @@ const VideoCard = ({ video, index, category, isAdmin, editVideo, deleteVideo }) 
   const [newTitle, setNewTitle] = useState(video.title);
   const videoId = extractYouTubeId(video.url);
   const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-  
+
   const handleSave = () => {
     editVideo(category, index, newTitle);
     setIsEditing(false);
