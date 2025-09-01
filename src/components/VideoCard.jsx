@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { extractYouTubeId } from "../utils/extractYouTubeId";
+
+
 
 const VideoCard = ({ video, index, category, isAdmin, editVideo, deleteVideo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(video.title);
-
+  const videoId = extractYouTubeId(video.url);
+  const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  
   const handleSave = () => {
     editVideo(category, index, newTitle);
     setIsEditing(false);
@@ -25,14 +30,15 @@ const VideoCard = ({ video, index, category, isAdmin, editVideo, deleteVideo }) 
       ) : (
         <h3>{video.title}</h3>
       )}
-
+  {embedUrl && (
       <iframe
-        src={video.url.replace("watch?v=", "embed/")}
+        src={embedUrl}
         title={video.title}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
+  )}
 
       {isAdmin && !isEditing && (
   <div style={{ marginTop: "10px" }}>
